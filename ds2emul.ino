@@ -6,6 +6,8 @@
 #define SS_PIN 5
 #define ACK_PIN 6
 
+uint8_t cmd[8] ={0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
 setup()
 {
   pinMode(MISO_PIN, INPUT);
@@ -21,12 +23,22 @@ setup()
 
 loop()
 {
-  digitalWrite(SS, LOW);
+  digitalWrite(SS_PIN, LOW);
 
-  SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));
-
-  SPI.transfer(',');
-
-
-  SPI.endTransaction();
+  for(uint8_t i=0; i<=7; i++)
+  {
+    SPI.beginTransaction(SPISettings(1000000, LSBFIRST, SPI_MODE3));
+    SPI.transfer(cmd[i]);
+    SPI.endTransaction();
+   
+    uint8_t counter = 0;
+    if(i == 7) break;
+    while(!digitalRead(ACK_PIN))
+    {
+      counter++;
+      delay(1);
+    }
+  }
+  
+  digitalWrite(SS_PIN, HIGH);
 }
