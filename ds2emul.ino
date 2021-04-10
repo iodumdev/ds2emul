@@ -1,4 +1,4 @@
-#include "SPI.h"
+#include <SPI.h>
 
 #define SCLK_PIN 13
 #define MISO_PIN 12
@@ -6,7 +6,7 @@
 #define SS_PIN 10
 #define ACK_PIN 9
 
-uint8_t cmd[8] ={0x01, 0x42, 0x00, 0x00, 0x00};
+uint8_t cmd[5] ={0x01, 0x42, 0x00, 0x00, 0x00};
 
 void setup(void)
 {
