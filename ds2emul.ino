@@ -24,6 +24,7 @@ setup()
 loop()
 {
   digitalWrite(SS_PIN, LOW);
+  bool error = false;
 
   for(uint8_t i=0; i<=7; i++)
   {
@@ -36,9 +37,16 @@ loop()
     while(!digitalRead(ACK_PIN))
     {
       counter++;
-      delay(1);
+      if(counter >= 100)
+      {
+        error = true;
+        break;
+      }
+      delay(10);
     }
+    if(error) break;
   }
   
   digitalWrite(SS_PIN, HIGH);
+  delay(10);
 }
