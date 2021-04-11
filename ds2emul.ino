@@ -14,6 +14,9 @@ void setup(void)
   pinMode(ACK_PIN, INPUT);
 
   SPI.begin();
+  SPI.setBitOrder(LSBFIRST);
+  SPI.setDataMode(SPI_MODE3);
+  SPI.setClockDivider(SPI_CLOCK_DIV64);
   digitalWrite(SS_PIN, HIGH);
   
 }
